@@ -72,6 +72,11 @@ namespace Pinvoke
 
     public class User32 
     {
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetShellWindow();
+        [DllImport("user32.dll")]
+        public static extern bool BlockInput(bool fBlockIt);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowText(IntPtr handle,StringBuilder lpString, int cch);
 
