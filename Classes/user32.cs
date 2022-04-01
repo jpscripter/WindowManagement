@@ -69,14 +69,25 @@ namespace Pinvoke
         SWP_NOMOVE = 0x0002,
         SWP_SHOWWINDOW = 0x0040
     }
+    public enum WindowAffinity : uint
+    {
+        //Imposes no restrictions on where the window can be displayed.
+        WDA_NONE = 0x00000000,
+        //The window content is displayed only on a monitor. Everywhere else, the window appears with no content.
+        WDA_MONITOR = 0x00000001,
+        //The window is displayed only on a monitor. Everywhere else, the window does not appear at all. One use for this affinity is for windows that show video recording controls, so that the controls are not included in the capture.
+        WDA_EXCLUDEFROMCAPTURE  = 0x00000011
+    }
 
     public class User32 
     {
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Auto)]
         public static extern IntPtr GetShellWindow();
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Auto)]
         public static extern bool BlockInput(bool fBlockIt);
-
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowDisplayAffinity(IntPtr WindowHandle, WindowAffinity Affinity);
+        
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowText(IntPtr handle,StringBuilder lpString, int cch);
 

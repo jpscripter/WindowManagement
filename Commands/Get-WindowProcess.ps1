@@ -1,4 +1,6 @@
 function Get-WindowProcess {
+[CmdletBinding()]
+
     param
     (
       [IntPtr]

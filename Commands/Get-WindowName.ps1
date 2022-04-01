@@ -1,4 +1,5 @@
 function Get-WindowName {
+[CmdletBinding()]
     param
     (
       [IntPtr]

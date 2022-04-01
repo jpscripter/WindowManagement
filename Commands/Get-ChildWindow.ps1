@@ -11,7 +11,7 @@ param (
             WindowHandle = $WindowHandle
             ChildId = $child
             ChildTitle = (Get-WindowName -WindowHandle $child)
-            $processID = Get-WindowProcess -WindowHandle $WindowHandle
+            processID = Get-WindowProcess -WindowHandle $WindowHandle
         }
     }
 }
