@@ -1,4 +1,5 @@
 $ModuleInfo = Import-PowerShellDataFile -Path "$PSScriptRoot\WindowManagement.psd1"
+Add-Type -AssemblyName System.Drawing
 
 if (Test-Path -Path $PSScriptRoot\Classes\){
     $Class = Get-ChildItem -Path $PSScriptRoot\Classes\*.cs -file -Recurse

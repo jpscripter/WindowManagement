@@ -80,6 +80,12 @@ namespace Pinvoke
     }
     public delegate bool EnumDesktopsDelegate(string desktop, IntPtr lParam);
     public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr parameter);
+    public struct RECT {
+        public long left;
+        public long top;
+        public long right;
+        public long bottom;
+    }
     public class User32
     {
         public const uint SPI_SETDESKWALLPAPER = 0x0014;
@@ -90,6 +96,9 @@ namespace Pinvoke
         public static extern IntPtr GetShellWindow();
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern bool BlockInput(bool fBlockIt);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool EnableWindow(IntPtr handle, bool fBlockIt);
+         
         [DllImport("user32.dll")]
         public static extern bool SetWindowDisplayAffinity(IntPtr WindowHandle, WindowAffinity Affinity);
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -103,7 +112,9 @@ namespace Pinvoke
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowType uCmd);
         [DllImport("user32.dll")]
-        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT hWndInsertAfter);
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, long X, long Y, long cx, long cy, uint uFlags);
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr i);

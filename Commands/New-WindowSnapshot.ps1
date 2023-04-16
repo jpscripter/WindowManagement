@@ -4,9 +4,19 @@ function New-WindowSnapshot {
     param
     (
       [IntPtr]
-      $WindowHandle
+      $WindowHandle,
+      [io.FileInfo] $path
     )
-    $ProcessID = 0
-    $ThreadID = [Pinvoke.User32]::GetWindowThreadProcessId($WindowHandle, [ref]$ProcessID)
-    $ProcessID
+    
+      $bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height
+      $graphics = [Drawing.Graphics]::FromImage($bmp)
+  
+      $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size)
+  
+      $bmp.Save($path)
+  
+      $graphics.Dispose()
+      $bmp.Dispose()
+    
+
  }

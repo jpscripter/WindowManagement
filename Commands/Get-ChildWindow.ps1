@@ -3,9 +3,9 @@
 param (
     [Parameter(ValueFromPipeline = $true, ValueFromPipelinebyPropertyName = $true)]
     [ValidateNotNullorEmpty()]
-    [System.IntPtr]$WindowHandle
+    [System.IntPtr]$WindowHandle = [intptr]::zero
 )
-    foreach ($child in ([Pinvoke.user32]::GetChildWindows($WindowHandle))){
+    foreach ($child in ([Pinvoke.Logic.UserDesktopLogic]::GetChildWindows($WindowHandle))){
 
         [PSCustomObject] @{
             WindowHandle = $WindowHandle
