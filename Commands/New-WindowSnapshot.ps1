@@ -7,11 +7,18 @@ function New-WindowSnapshot {
       $WindowHandle,
       [io.FileInfo] $path
     )
-    
-      $bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height
+
+      $rect = New-Object -TypeName Pinvoke.RECT
+      $Success = [Pinvoke.User32]::GetWindowRect($WindowHandle,[ref]$rect)
+      $rect
+
+      [int]$Width = ( $rect.right - $rect.left )
+      [int]$Height = ($rect.bottom - $rect.top )
+      $bmp = New-Object -typename Drawing.Bitmap -argumentlist ($width, $Height)
       $graphics = [Drawing.Graphics]::FromImage($bmp)
   
-      $graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size)
+      $Size  = [System.Drawing.Size]::new($width,$height)
+      $graphics.CopyFromScreen($rect.bottom,$rect.left,$rect.top,$rect.top, $size,'Blackness')
   
       $bmp.Save($path)
   

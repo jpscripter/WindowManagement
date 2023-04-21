@@ -81,10 +81,10 @@ namespace Pinvoke
     public delegate bool EnumDesktopsDelegate(string desktop, IntPtr lParam);
     public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr parameter);
     public struct RECT {
-        public long left;
-        public long top;
-        public long right;
-        public long bottom;
+        public int left;
+        public int top;
+        public int right;
+        public int bottom;
     }
     public class User32
     {
@@ -111,6 +111,8 @@ namespace Pinvoke
         public static extern Int32 GetWindowTextLength(IntPtr hWnd);
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowType uCmd);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr GetDC(IntPtr hWnd);
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT hWndInsertAfter);
         [DllImport("user32.dll")]
