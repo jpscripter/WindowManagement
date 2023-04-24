@@ -129,6 +129,6 @@ namespace Pinvoke
         [DllImport("user32.dll")]
         public static extern bool IsWindowVisible(IntPtr hWnd);
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        static extern bool EnumWindowStations(EnumWindowStationsDelegate lpEnumFunc, IntPtr lParam);
+        public static extern bool EnumWindowStations(EnumWindowStationsDelegate lpEnumFunc, IntPtr lParam);
     }
 }
