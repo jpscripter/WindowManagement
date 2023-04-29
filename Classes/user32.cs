@@ -81,7 +81,6 @@ namespace Pinvoke
     public delegate bool EnumDesktopsDelegate(string desktop, IntPtr lParam);
     public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr parameter);
     public delegate bool EnumWindowStationsDelegate(string windowsStation, IntPtr lParam);
-
     public struct RECT {
         public int left;
         public int top;
@@ -129,6 +128,6 @@ namespace Pinvoke
         [DllImport("user32.dll")]
         public static extern bool IsWindowVisible(IntPtr hWnd);
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern bool EnumWindowStations(EnumWindowStationsDelegate lpEnumFunc, IntPtr lParam);
+        public static extern bool EnumWindowStationsW(EnumWindowStationsDelegate lpEnumFunc, IntPtr lParam);
     }
 }
