@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Pinvoke
 {
+    
     public enum GetWindowType : uint
     {
         /// <summary>
@@ -135,6 +136,25 @@ namespace Pinvoke
         /// minimizing windows from a different thread.</summary>
         SW_FORCEMINIMIZE = 11,
     }
+    public enum WindowsMessage
+    {
+        WM_CREATE = 0x0001,
+        WM_DESTROY = 0x0002,
+        WM_MOVE = 0x0003,
+        WM_SIZE = 0x0005,
+        WM_ACTIVATE = 0x0006,
+        WM_SETFOCUS = 0x0007,
+        WM_KILLFOCUS = 0x0008,
+        WM_ENABLE = 0x000A,
+        WM_SETTEXT = 0x000C,
+        WM_GETTEXT = 0x000D,
+        WM_PAINT = 0x000F,
+        WM_CLOSE = 0x0010,
+        WM_QUIT = 0x0012,
+        WM_SHOWWINDOW = 0x0018,
+        WM_SETCURSOR = 0x0020
+    }
+
     public delegate bool EnumDesktopsDelegate(string desktop, IntPtr lParam);
     public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr parameter);
     public delegate bool EnumWindowStationsDelegate(string windowsStation, IntPtr lParam);
@@ -162,6 +182,8 @@ namespace Pinvoke
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowText(IntPtr handle, StringBuilder lpString, int cch);
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+        [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern Int32 GetWindowThreadProcessId(IntPtr hWnd, out Int32 ProcessId);
@@ -183,12 +205,20 @@ namespace Pinvoke
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr i);
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern bool EnumDesktops(IntPtr hwinsta, EnumDesktopsDelegate lpEnumFunc, IntPtr lParam);
+        public static extern bool EnumDesktops(IntPtr hwinsta, EnumDesktopsDelegate lpEnumFunc, IntPtr lParam);  
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr GetParent(IntPtr hWnd);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern int SystemParametersInfoWS(uint uAction, uint uParam, string lpvParam, uint fuWinIni);
         [DllImport("user32.dll")]
         public static extern bool IsWindowVisible(IntPtr hWnd);
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern bool EnumWindowStationsW(EnumWindowStationsDelegate lpEnumFunc, IntPtr lParam);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
     }
 }
